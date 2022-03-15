@@ -95,11 +95,11 @@ function MainPage() {
         <Inner>
           <Box>
             <Fade bottom> 
-              <span>
+              <span className="">
                 <br/>
-                당신의 추억 속 영화를 <PointText>평가</PointText>해 주세요.
+                당신의 추억 속 영화를 <PointText>평가</PointText>해 주세요
               </span>
-              <Sample/>
+              <div className="text-red-500">hi</div>
             </Fade> 
           </Box>
         </Inner>
