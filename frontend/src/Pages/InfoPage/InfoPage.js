@@ -1,7 +1,36 @@
+import React, { useState , useEffect } from 'react';
 import styled from 'styled-components';
 import NavBar from '../../Components/NavBar/NavBar';
+import axios from 'axios';
+import SearchMovies from '../../Components/SearchMovies/SearchMovies';
+import { useLocation } from 'react-router';
+import queryString from 'query-string';
+import { API_URL } from '../../Api/Config';
+import MovieDetail from '../../Components/MovieDetail/MovieDetail'
+import { useParams } from 'react-router';
+import MainMovies from '../../Components/MainMovies/MainMovies';
+
 
 export default function InfoPages() {
+
+    const [ sawMovieInfo, setSawMovieInfo ] = useState([])
+    const [ likedMovieInfo, setLikedMovieInfo ] = useState([])
+
+    const userId = useParams().user_id;
+
+
+    useEffect(()=> {
+        const fetchData = async() => {
+            const result = await axios.get(`http://localhost:5000/user-info/${userId}`)
+            setSawMovieInfo(result.data.comment_movies);
+            setLikedMovieInfo(result.data.want_watch_movies);
+        };
+        fetchData();
+    }, []);
+    console.log(sawMovieInfo)
+    console.log(likedMovieInfo)
+    
+
     return (
         <>
             <NavBar/>
@@ -11,11 +40,25 @@ export default function InfoPages() {
                     <Title>
                         봤어요
                     </Title>
-                        <MovieList/>
+                        {sawMovieInfo && sawMovieInfo.map(movie => (
+                            <React.Fragment key={movie.index}>
+                                <MainMovies
+                                    movieId={movie.index}
+                                    image={movie.poster_url}
+                                />
+                            </React.Fragment>
+                        ))}
                     <Title>
                         보고 싶어요
                     </Title>
-                        <MovieList/>
+                        {likedMovieInfo && likedMovieInfo.map(movie => (
+                            <React.Fragment key={movie.index}>
+                                <MainMovies
+                                    movieId={movie.index}
+                                    image={movie.poster_url}
+                                />
+                            </React.Fragment>
+                        ))}
                 </Box>
             </Inner>
         </>
@@ -23,7 +66,7 @@ export default function InfoPages() {
 };
 
 const Inner = styled.div`
-    height: 100vh;
+    height: 150vh;
     display: flex;
     background-color: #1C2126;
     justify-content: center;
