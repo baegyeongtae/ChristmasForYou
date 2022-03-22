@@ -1,20 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { loginState } from '../../Pages/Recoil/Atoms';
 
 function Favorite() {
   
-  const LogInChecker = useRecoilValue(loginState)
+  //const LogInChecker = useRecoilValue(loginState)
   const movieId = useParams().movie_id
   const [likeStatus, setLikeStatus] = useState(`좋아요`)
+  const loggedIn = useSetRecoilState(loginState)
+
+  useEffect(() => {
+    loggedIn(() => sessionStorage.getItem('on'))
+  })
 
   const likedChecker = async() => {
-    if(LogInChecker === true) {
+    if(loggedIn === true) {
       await axios.post(`http://localhost:5000/movies/${movieId}/like`, { withCredentials : true})
         .then(response => {
-          let result = response.data.message;
+          let result = response.message;
           if (result === '좋아요 등록 완료') {
             setLikeStatus(`좋아요 취소`) 
           } else {

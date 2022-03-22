@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from "react-router-dom";
 
@@ -17,13 +17,19 @@ import MenuItem from '@mui/material/MenuItem';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import { loginState } from "../../Pages/Recoil/Atoms";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import useSessionStorage from "../../Pages/Recoil/useSessionStorage";
 
 
 const settings = ['마이페이지'];
 
 const NavBar = (props) => {
+
+    const loggedIn = useSetRecoilState(loginState)
+
+    useEffect(() => {
+      loggedIn(() => sessionStorage.getItem('on'))
+    })
 
     const [SearchTerms, setSearchTerms] = useState("")
     const [MovieKeyword, setMovieKeyword] = useState("")
