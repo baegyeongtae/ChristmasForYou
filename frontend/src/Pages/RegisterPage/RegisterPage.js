@@ -82,6 +82,11 @@ const RegisterPage = () => {
 
     if (password !== confirmpassword) {
       window.alert("비밀번호와 비밀번호 확인은 같아야 합니다!");
+      return;
+    }
+    if (!profile_img) {
+      window.alert("이미지를 업로드 해주세요.");
+      return;
     }
 
     axios
