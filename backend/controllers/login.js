@@ -77,7 +77,7 @@ exports.loginLocal = async (req, res, next) => {
       httpOnly: true,
     });
 
-    return res.json({ success: true, message: "로그인 완료" });
+    return res.json({ success: true, message: "로그인 완료", id: user.index });
   })(req, res, next);
 }
 
