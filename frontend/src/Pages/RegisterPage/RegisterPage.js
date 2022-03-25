@@ -2,7 +2,6 @@ import React, { useState, useRef } from "react";
 import "./RegisterPage.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Avatar } from "antd";
 
 const RegisterPage = () => {
   //url 이동을 위한 useHistory
@@ -36,45 +35,10 @@ const RegisterPage = () => {
     console.log(account);
   };
 
-  const [profile_img, setProfile_img] = useState("");
   const [name, setName] = useState("");
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [confirmpassword, setConfirmpassword] = useState("");
-
-  const [Image, setImage] = useState(
-    "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-  );
-  const fileInput = useRef(null);
-  const [file, setFile] = useState(null);
-
-  const onChange = (e) => {
-    if (e.target.files[0]) {
-      setFile(e.target.files[0]);
-      setAccount({
-        ...account,
-        [e.target.name]: e.target.value,
-      });
-      if (e.target.name === "profile_img") {
-        setProfile_img(e.target.files[0]);
-      }
-      console.log(account);
-    } else {
-      //업로드 취소할 시
-      setImage(
-        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-      );
-      return;
-    }
-    //화면에 프로필 사진 표시
-    const reader = new FileReader();
-    reader.onload = () => {
-      if (reader.readyState === 2) {
-        setImage(reader.result);
-      }
-    };
-    reader.readAsDataURL(e.target.files[0]);
-  };
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -82,10 +46,6 @@ const RegisterPage = () => {
 
     if (password !== confirmpassword) {
       window.alert("비밀번호와 비밀번호 확인은 같아야 합니다!");
-      return;
-    }
-    if (!profile_img) {
-      window.alert("이미지를 업로드 해주세요.");
       return;
     }
 
@@ -116,25 +76,6 @@ const RegisterPage = () => {
       <div className="form">
         <h2>회원가입</h2>
         <form>
-          <div>
-            <Avatar
-              src={Image}
-              style={{ margin: "10px" }}
-              size={100}
-              onClick={() => {
-                fileInput.current.click();
-              }}
-            />
-            <h5>프로필 사진 업로드</h5>
-            <input
-              type="file"
-              style={{ display: "none" }}
-              accept="image/jpg,impge/png,image/jpeg"
-              name="profile_img"
-              onChange={onChange}
-              ref={fileInput}
-            />
-          </div>
           <div>
             <input
               name="name"
