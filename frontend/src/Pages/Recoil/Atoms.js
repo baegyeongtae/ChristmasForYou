@@ -1,25 +1,27 @@
-import { atom } from 'recoil';
-// import { recoilPersist } from 'recoil-persist'
+import { atom, selector } from "recoil";
+import { recoilPersist } from "recoil-persist";
 
-// const { persistAtom } = recoilPersist()
+const { persistAtom } = recoilPersist();
 
 export const userState = atom({
-  key: 'userstate', // unique ID (with respect to other atoms/selectors)
-  default: {} // default value (aka initial value)
+  key: "userstate",
+  default: {},
 });
 
 export const loginState = atom({
-  key: 'loginstate', // unique ID (with respect to other atoms/selectors)
-  default: false// default value (aka initial value)
+  key: "loginstate",
+  default: false,
+  effects_UNSTABLE: [persistAtom],
 });
 
-// export const logoutState = atom({
-//   key: 'logoutstate', // unique ID (with respect to other atoms/selectors)
-//   default: false// default value (aka initial value)
-// });
-
-// export const loginState = atom({
-//   key: 'loginstate',
-//   default: false,
-//   effects_UNSTABLE: [persistAtom],
-// })
+export const loginText = selector({
+  key: "logintext",
+  get: ({ get }) => {
+    const loginResult = get(loginState);
+    if (loginResult) {
+      return `로그아웃`;
+    } else {
+      return `로그인`;
+    }
+  },
+});
