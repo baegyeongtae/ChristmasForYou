@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -47,16 +47,6 @@ const NavBar = (props) => {
     }
   };
 
-  // const userLogged = (on) => {
-  //   if (on === true) {
-  //     return `로그아웃`;
-  //   } else if (on === false) {
-  //     return `로그인`;
-  //   } else {
-  //     return `로그인`;
-  //   }
-  // };
-
   const LogInChecker = () => {
     console.log(on);
     if (on === true) {
@@ -84,9 +74,6 @@ const NavBar = (props) => {
       navigate("/login");
     }
   };
-  // useEffect(() => {
-  //   setOn(sessionStorage.getItem("login"));
-  // }, []);
 
   return (
     <AppBar position="fixed">
