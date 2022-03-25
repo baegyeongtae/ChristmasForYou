@@ -52,8 +52,8 @@ const LoginPage = () => {
         if (result === true) {
           setLoginResult(result);
           navigate("/");
-        } else if (result === false) {
-        }
+          return;
+        } else window.alert(response.data.message);
       })
       .catch((error) => {
         console.log(error);
