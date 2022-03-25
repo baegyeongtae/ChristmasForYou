@@ -38,8 +38,6 @@ const LoginPage = () => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    console.log(account);
-    console.log(Cookies.remove("accessToken"));
     axios
       .post("http://localhost:5000/user/login/local", account, {
         withCredentials: true,
