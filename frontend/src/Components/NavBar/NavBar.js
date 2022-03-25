@@ -125,23 +125,15 @@ const NavBar = (props) => {
                 회원가입
               </Button>
             </Link>
-          </Box>
-
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
+            {on ? (
               <Link to="/info">
-                <IconButton sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                </IconButton>
+                <Button sx={{ my: 2, color: "white", display: "block" }}>
+                  마이페이지
+                </Button>
               </Link>
-            </Tooltip>
-            <Menu sx={{ mt: "45px" }} id="menu-appbar">
-              {settings.map((setting) => (
-                <MenuItem key={setting}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
+            ) : (
+              <></>
+            )}
           </Box>
         </Toolbar>
       </Container>
