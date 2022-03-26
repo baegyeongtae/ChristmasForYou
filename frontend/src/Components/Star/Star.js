@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import { Rating } from 'react-simple-star-rating';
+import ReactStars from "react-rating-stars-component";
 import { useRecoilValue } from 'recoil';
 import { loginState } from '../../Pages/Recoil/Atoms';
 import axios from 'axios';
@@ -13,9 +13,9 @@ function Star(props) {
     const [rating, setRating] = useState(0) 
     const [postResult, setPostResult] = useState()
     
-    const handleRating = (rate) => {
-        setRating(rate / 10)
-    }
+    const ratingChanged = (newRating) => {
+        console.log(newRating);
+      };
     
     const postRating = async(rating) => {
         if(LogInChecker === true && rating > 0) {
@@ -30,13 +30,16 @@ function Star(props) {
 
     
     return (
-        <div>
-            <Rating 
-                onClick={handleRating, postRating}
-                retingValue={rating}
-                size={50}
-                transition
-                allowHalfIcon
+        <div className="mt-8 flex justify-center">
+            <ReactStars
+                count={5}
+                onChange={ratingChanged}
+                size={24}
+                isHalf={true}
+                emptyIcon={<i className="far fa-star"></i>}
+                halfIcon={<i className="fa fa-star-half-alt"></i>}
+                fullIcon={<i className="fa fa-star"></i>}
+                activeColor="#ffd700"
             />
             {postResult ? 
                 <Modal visible={true}/> : null}
